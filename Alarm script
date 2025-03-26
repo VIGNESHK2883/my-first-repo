@@ -1,0 +1,38 @@
+import _confd
+import _confd.maapi
+import _confd.alarms
+import socket
+
+def send_alarm_notification():
+    try:
+        # Create a socket connection
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect(('127.0.0.1', 4565))  # ConfD MAAPI port
+
+        # Attach the socket to MAAPI
+        maapi_sock = _confd.maapi.maapi()
+        maapi_sock.start_user_session("admin", "system", [], "127.0.0.1")
+
+        # Load schemas
+        _confd.maapi.load_schemas(maapi_sock)
+        print("Schemas loaded successfully.")
+
+        # Create an alarm notification
+        alarm = _confd.alarms.alarm()
+        alarm.alarm_code = 1001  # Example alarm code
+        alarm.severity = _confd.alarms.ALARM_SEVERITY_MAJOR
+        alarm.text = "Test alarm notification"
+
+        # Send the alarm notification
+        _confd.alarms.alarm_send(maapi_sock, alarm)
+        print("Alarm notification sent successfully.")
+
+        # Close the MAAPI session and socket
+        maapi_sock.end_user_session()
+        sock.close()
+
+    except Exception as e:
+        print("Error:", str(e))
+
+# Run the function
+send_alarm_notification()
