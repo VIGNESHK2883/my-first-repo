@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://openconfig.net/yang/platform">
+	<component>
+		<name>Mux</name>
+		<config>
+		<name>Mux</name>
+		</config>
+</component>
+	<component>
+		<name>slot1</name>
+		<config>
+		<name>slot1</name>
+		</config>
+</component>
+	<component>
+		<name>port 1-1-1911</name>
+		<config>
+		<name>port 1-1-1911</name>
+		</config>
+</component>	
+<component>
+		<name>port 1-1-1912</name>
+		<config>
+		<name>port 1-1-1912</name>
+		</config>
+</component>
+	<component>
+		<name>port 1-1-1913</name>
+		<config>
+		<name>port 1-1-1913</name>
+		</config>
+</component>
+	<component>
+		<name>port 1-1-1914</name>
+		<config>
+		<name>port 1-1-1914</name>
+		</config>
+</component>
+</components>
