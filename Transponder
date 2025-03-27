@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<components xmlns="http://openconfig.net/yang/platform">
+	<component>
+		<name>Trans100</name>
+		<config>
+			<name>Trans100</name>
+		</config>
+	</component>
+	<component>
+		<name>slot-1-1</name>
+		<config>
+			<name>slot-1-1</name>
+		</config>
+	</component>
+	<component>
+		<name>slot-1-2</name>
+		<config>
+			<name>slot-1-2</name>
+		</config>
+	</component>
+	<component>
+		<name>trans-1-1-c1</name>
+		<config>
+			<name>trans-1-c1</name>
+		</config>
+	</component>
+	<component>
+		<name>trans-1-2-c2</name>
+		<config>
+			<name>trans-1-c2</name>
+		</config>
+	</component>
+</components>
+
+confd_cmd -o -c "set /components/component{Trans100}/state/mfg-name wipro"
+confd_cmd -o -c "set /components/component{Trans100}/state/mfg-date 25/03/2025"
+confd_cmd -o -c "set /components/component{Trans100}/state/clei-code 1743"
+confd_cmd -o -c "set /components/component{Trans100}/state/mfg-name Wipro"
+confd_cmd -o -c "set /components/component{Trans100}/state/mfg-date 2025-03-25"
+confd_cmd -o -c "set /components/component{Trans100}/state/part-no 1753"
+confd_cmd -o -c "set /components/component{Trans100}/state/type shelf"
+confd_cmd -o -c "set /components/component{slot-1}/state/parent Trans100"
+confd_cmd -o -c "set /components/component{trans-1-c1}/state/parent slot-1"
+confd_cmd -o -c "set /components/component{trans-1-c2}/state/parent slot-2"
+ confd_cmd -o -c "set /components/component{Trans100}/state/name shelf
+confd_cmd -o -c "set /components/component{Trans100}/state/type shelf
+
+
+
+
