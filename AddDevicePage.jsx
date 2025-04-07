@@ -1,58 +1,48 @@
 import React, { useState } from 'react';
-import './AddDevicePage.css';
 
-const AddDevicePage = () => {
-  const [form, setForm] = useState({
-    name: '',
-    ip: '',
-    port: '',
-    username: '',
-    password: ''
-  });
+function AddDevicePage() {
+  const [deviceName, setDeviceName] = useState('');
+  const [ipAddress, setIpAddress] = useState('');
+  const [port, setPort] = useState('');
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch('http://localhost:8080/api/devices', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form)
-      });
-
-      if (res.ok) {
-        alert('Device added successfully');
-        setForm({ name: '', ip: '', port: '', username: '', password: '' });
-      } else {
-        alert('Failed to add device');
-      }
-    } catch (error) {
-      alert('Error connecting to backend');
-    }
+    console.log("Device Details:", { deviceName, ipAddress, port });
+    alert("Device added (mock)!");
   };
 
   return (
-    <div className="form-container">
+    <div style={{ padding: '20px' }}>
       <h2>Add Network Device</h2>
       <form onSubmit={handleSubmit}>
-        {['name', 'ip', 'port', 'username', 'password'].map((field) => (
+        <div style={{ marginBottom: '10px' }}>
+          <label>Device Name: </label>
           <input
-            key={field}
-            type={field === 'password' ? 'password' : 'text'}
-            name={field}
-            placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-            value={form[field]}
-            onChange={handleChange}
-            required
+            type="text"
+            value={deviceName}
+            onChange={(e) => setDeviceName(e.target.value)}
           />
-        ))}
+        </div>
+        <div style={{ marginBottom: '10px' }}>
+          <label>IP Address: </label>
+          <input
+            type="text"
+            value={ipAddress}
+            onChange={(e) => setIpAddress(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: '10px' }}>
+          <label>Port: </label>
+          <input
+            type="text"
+            value={port}
+            onChange={(e) => setPort(e.target.value)}
+          />
+        </div>
         <button type="submit">Add Device</button>
       </form>
     </div>
   );
-};
+}
 
 export default AddDevicePage;
