@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 
 function AddDevicePage() {
-  const [deviceName, setDeviceName] = useState('');
   const [ipAddress, setIpAddress] = useState('');
-  const [port, setPort] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [type, setType] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Device Details:", { deviceName, ipAddress, port });
+    console.log("Device Details:", { ipAddress, username, password, type });
     alert("Device added (mock)!");
   };
 
@@ -15,14 +16,6 @@ function AddDevicePage() {
     <div style={{ padding: '20px' }}>
       <h2>Add Network Device</h2>
       <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: '10px' }}>
-          <label>Device Name: </label>
-          <input
-            type="text"
-            value={deviceName}
-            onChange={(e) => setDeviceName(e.target.value)}
-          />
-        </div>
         <div style={{ marginBottom: '10px' }}>
           <label>IP Address: </label>
           <input
@@ -32,11 +25,27 @@ function AddDevicePage() {
           />
         </div>
         <div style={{ marginBottom: '10px' }}>
-          <label>Port: </label>
+          <label>Username: </label>
           <input
             type="text"
-            value={port}
-            onChange={(e) => setPort(e.target.value)}
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: '10px' }}>
+          <label>Password: </label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div style={{ marginBottom: '10px' }}>
+          <label>Device Type: </label>
+          <input
+            type="text"
+            value={type}
+            onChange={(e) => setType(e.target.value)}
           />
         </div>
         <button type="submit">Add Device</button>
