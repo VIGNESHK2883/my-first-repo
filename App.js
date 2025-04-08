@@ -1,13 +1,16 @@
-import React from 'react';
-import AddDevicePage from './AddDevicePage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import AddDevice from './pages/AddDevice'
+import Login from './pages/Login'
 
 function App() {
   return (
-    <div>
-      <h1 style={{ textAlign: 'center' }}>Network Configuration UI</h1>
-      <AddDevicePage />
-    </div>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<AddDevice />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
+    </Router>
+  )
 }
 
-export default App;
+export default App
