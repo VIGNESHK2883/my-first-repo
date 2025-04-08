@@ -1,49 +1,39 @@
-import React, { useState } from 'react';
-import './LoginPage.css';
+import { useState } from 'react'
+import LoginForm from '../components/LoginForm'
+import { Box, Typography, Container, Paper } from '@mui/material'
 
-function LoginPage() {
-  const [ipAddress, setIpAddress] = useState('');
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login = () => {
+  const [error, setError] = useState('')
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    console.log("Login Info:", { ipAddress, username, password });
-    alert("Login submitted (mock)!");
-  };
+  const handleLogin = async (credentials) => {
+    try {
+      // In a real app, this would be an API call to your backend
+      console.log('Login credentials:', credentials)
+      
+      // Simulate successful login
+      alert('Login successful! (This is a frontend demo)')
+    } catch (err) {
+      setError('Invalid credentials. Please try again.')
+    }
+  }
 
   return (
-    <div className="login-container">
-      <h2>Login to Device</h2>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label>IP Address</label>
-          <input
-            type="text"
-            value={ipAddress}
-            onChange={(e) => setIpAddress(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
+    <Container maxWidth="sm">
+      <Box sx={{ mt: 4 }}>
+        <Paper elevation={3} sx={{ p: 4 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Login
+          </Typography>
+          {error && (
+            <Typography color="error" sx={{ mb: 2 }}>
+              {error}
+            </Typography>
+          )}
+          <LoginForm onSubmit={handleLogin} />
+        </Paper>
+      </Box>
+    </Container>
+  )
 }
 
-export default LoginPage;
+export default Login
