@@ -1,0 +1,26 @@
+const handleLogin = async (e) => {
+  e.preventDefault();
+
+  const loginData = { ipAddress, username, password };
+
+  try {
+    const response = await fetch("http://localhost:8080/api/devices/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(loginData),
+    });
+
+    const result = await response.text();
+    if (result === "Login successful!") {
+      alert(result);
+      navigate("/device-options", { state: { deviceType: "SampleType" } });
+    } else {
+      alert(result);
+    }
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Login failed!");
+  }
+};
