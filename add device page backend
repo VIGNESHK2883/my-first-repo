@@ -1,0 +1,27 @@
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!deviceName || !ipAddress || !port || !deviceType) {
+    alert("Please fill all fields");
+    return;
+  }
+
+  const deviceData = { deviceName, ipAddress, port, deviceType };
+
+  try {
+    const response = await fetch("http://localhost:8080/api/devices/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(deviceData),
+    });
+
+    const result = await response.text();
+    alert(result);
+    navigate("/login", { state: { ipAddress } });
+  } catch (error) {
+    console.error("Error adding device:", error);
+    alert("Something went wrong!");
+  }
+};
