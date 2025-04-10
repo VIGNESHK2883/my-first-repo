@@ -1,17 +1,26 @@
-// src/ConfigPage.js
-import React from 'react';
-import './App.css'; // for shared styles
+import React, { useEffect, useState } from 'react';
+import './App.css'; // Reuse your existing CSS
 
 const ConfigPage = () => {
-  const configData = [
-    { equipId: 'EQ001', equipAttributes: 'Attr1', equipName: 'Device A', equipType: 'Amplifier' },
-    { equipId: 'EQ002', equipAttributes: 'Attr2', equipName: 'Device B', equipType: 'Receiver' },
-    // Add more dummy or fetched data here
-  ];
+  const [devices, setDevices] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/config/devices")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => setDevices(data))
+      .catch((error) => {
+        console.error("Error fetching devices:", error);
+      });
+  }, []);
 
   return (
     <div className="container">
-      <h2 className="title">Configuration Details</h2>
+      <h2>Configuration Management</h2>
       <table className="device-table">
         <thead>
           <tr>
@@ -22,12 +31,12 @@ const ConfigPage = () => {
           </tr>
         </thead>
         <tbody>
-          {configData.map((device, index) => (
+          {devices.map((device, index) => (
             <tr key={index}>
-              <td>{device.equipId}</td>
-              <td>{device.equipAttributes}</td>
-              <td>{device.equipName}</td>
-              <td>{device.equipType}</td>
+              <td>{device.equipid}</td>
+              <td>{device.equipattributes}</td>
+              <td>{device.equipname}</td>
+              <td>{device.equiptype}</td>
             </tr>
           ))}
         </tbody>
