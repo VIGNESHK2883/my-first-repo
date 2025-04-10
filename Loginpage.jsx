@@ -4,13 +4,18 @@ function LoginPage() {
   const [ip, setIp] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
-    if (ip && password) {
-      alert('Login successful (mock)');
-    } else {
-      alert('Enter IP and password');
-    }
-  };
+  const handleLogin = (e) => {
+  e.preventDefault();
+  const savedUsername = localStorage.getItem("username");
+  const savedPassword = localStorage.getItem("password");
+
+  if (username === savedUsername && password === savedPassword) {
+    alert("Login successful!");
+    navigate("/device-options", { state: { deviceType: "Your Device Type" } });
+  } else {
+    alert("Invalid username or password.");
+  }
+};
 
   return (
     <div style={{ padding: '20px' }}>
