@@ -1,48 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import './App.css'; // Reuse your existing CSS
+import React from 'react';
+import './App.css';
+import { useNavigate } from 'react-router-dom';
 
-const ConfigPage = () => {
-  const [devices, setDevices] = useState([]);
+const ConfigurationManagement = () => {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch("http://localhost:8080/config/devices")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then((data) => setDevices(data))
-      .catch((error) => {
-        console.error("Error fetching devices:", error);
-      });
-  }, []);
+  const handleGetEquipments = () => {
+    navigate('/config-page'); // Route to your table view (ConfigPage.jsx)
+  };
+
+  const handleGetPorts = () => {
+    navigate('/port-page'); // Create this if you need a new page for ports
+  };
 
   return (
     <div className="container">
       <h2>Configuration Management</h2>
-      <table className="device-table">
-        <thead>
-          <tr>
-            <th>Equip ID</th>
-            <th>Equip Attributes</th>
-            <th>Equip Name</th>
-            <th>Equip Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {devices.map((device, index) => (
-            <tr key={index}>
-              <td>{device.equipid}</td>
-              <td>{device.equipattributes}</td>
-              <td>{device.equipname}</td>
-              <td>{device.equiptype}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="button-group">
+        <button className="primary-button" onClick={handleGetEquipments}>
+          Get Equipment Details
+        </button>
+        <button className="primary-button" onClick={handleGetPorts}>
+          Get Port Details
+        </button>
+      </div>
     </div>
   );
 };
 
-export default ConfigPage;
+export default ConfigurationManagement;
