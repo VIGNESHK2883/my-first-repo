@@ -1,44 +1,84 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 function AddDevicePage() {
+  const [deviceName, setDeviceName] = useState('');
   const [ipAddress, setIpAddress] = useState('');
-  const [username, setUsername] = useState('');
+  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
-  const [type, setType] = useState('');
+  
+
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (ipAddress && username && password && type) {
-      alert('Device added successfully!');
-      navigate('/login');
-    } else {
-      alert('Please fill all fields.');
+    if (!deviceName || !ipAddress || !userName || !password) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:8080/api/devices/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Cache-Control": "no-cache",
+        },
+        body: JSON.stringify({ deviceName, ipAddress, userName, password}),
+      });
+
+      if (response.ok) {
+        localStorage.setItem("userName",userName);
+        localStorage.setItem("password",password);
+        alert("Device added successfully");
+        navigate("/login");
+      } else {
+        alert("Failed to add device");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error while adding device");
     }
   };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Add Device</h2>
+    <div className="container">
+      <h2>Add Network Device</h2>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="form-group">
+          <label>Device Name:</label>
+          <input
+            type="text"
+            value={deviceName}
+            onChange={(e) => setDeviceName(e.target.value)}
+          />
+        </div>
+        <div className="form-group">
           <label>IP Address:</label>
-          <input type="text" value={ipAddress} onChange={(e) => setIpAddress(e.target.value)} />
+          <input
+            type="text"
+            value={ipAddress}
+            onChange={(e) => setIpAddress(e.target.value)}
+          />
         </div>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <div className="form-group">
+          <label>UserName:</label>
+          <input
+            type="text"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
         </div>
-        <div>
+        <div className="form-group">
           <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
-        <div>
-          <label>Type:</label>
-          <input type="text" value={type} onChange={(e) => setType(e.target.value)} />
-        </div>
-        <button type="submit">Submit</button>
+        <button type="submit">Add Device</button>
       </form>
     </div>
   );
