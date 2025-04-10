@@ -1,0 +1,46 @@
+import React, { useEffect, useState } from 'react';
+import './App.css'; // continue using the same CSS
+
+const PortDetails = () => {
+  const [ports, setPorts] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/config/ports') // Update with your actual backend URL
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch port details');
+        }
+        return response.json();
+      })
+      .then((data) => setPorts(data))
+      .catch((error) => console.error('Error:', error));
+  }, []);
+
+  return (
+    <div className="container">
+      <h2>Port Details</h2>
+      <table className="device-table">
+        <thead>
+          <tr>
+            <th>Port Name</th>
+            <th>Category</th>
+            <th>Parent</th>
+            <th>Port Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {ports.map((port, index) => (
+            <tr key={index}>
+              <td>{port.portname}</td>
+              <td>{port.category}</td>
+              <td>{port.parent}</td>
+              <td>{port.porttype}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+export default PortDetails;
